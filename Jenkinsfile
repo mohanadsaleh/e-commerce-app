@@ -22,5 +22,21 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                dir('e-commerce-app') {
+                    sh 'docker build -t momo777yazilim/e-commerce-app:latest .'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker stop e-commerce-app || true'
+                sh 'docker rm e-commerce-app || true'
+                sh 'docker run -d -p 5000:5000 --name e-commerce-app momo777yazilim/e-commerce-app:latest'
+            }
+        }
     }
 }

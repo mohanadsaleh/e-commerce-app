@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -22,9 +22,15 @@ def add_to_cart(product_id):
         return f"{product['name']} sepete eklendi!"
     return "Ürün bulunamadı."
 
+# المسار الجديد لاستقبال Webhook من GitHub
+@app.route('/github-webhook', methods=['POST'])
+def github_webhook():
+    data = request.get_json()
+    print(f"Received data: {data}")  # هنا يمكنك إضافة منطق لمعالجة البيانات إذا أردت
+    return '', 200  # استجابة إيجابية (رمز 200)
+
 def find_product(product_id):
     return next((p for p in products if p['id'] == product_id), None)
-
 
 def add_product_to_cart(product_id):
     product = find_product(product_id)
