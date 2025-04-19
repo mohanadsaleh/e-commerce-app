@@ -1,1 +1,2 @@
-test fot uddate
+test for uddate
+yeniden test
